@@ -1,90 +1,105 @@
-# SLE-2: BFS vs DFS Performance Analysis
 
-## Course
-02AML204 – Introduction to Artificial Intelligence
+---
 
-## Project Title
-Empirical Performance Analysis of BFS and DFS
+# 2. `AI_CONTRIBUTION_LOG.md`
 
-## Objective
-The objective of this project is to compare the performance of two
-uninformed search algorithms:
+```markdown
+# AI Contribution Log – SLE-2
 
-- Breadth First Search (BFS)
-- Depth First Search (DFS)
+## Student Information
 
-Both algorithms are applied to the same graph and their performance
-is measured using execution time and number of nodes expanded.
+- Course: 02AML204 – Introduction to Artificial Intelligence
+- Experiment: SLE-2 – Profiling Report
+- Topic: BFS vs DFS Performance Analysis
+- Student Name: Vaishnavi Punde
+- PRN: __________________
+- Division: __________________
 
-## Problem Used
-A small graph is used for the search experiment.
+---
 
-Start Node: A  
-Goal Node: L
+## 1. AI Tool Used
 
-The same graph and start/goal nodes are used for both BFS and DFS
-to make the comparison fair.
+The following AI tool was used during this experiment:
 
-## Algorithms
+- ChatGPT
 
-### 1. Breadth First Search (BFS)
-BFS explores nodes level by level. It uses a queue to store nodes
-that are waiting to be explored.
+---
 
-### 2. Depth First Search (DFS)
-DFS explores one branch as deeply as possible before backtracking.
-It uses a stack to manage the search.
+## 2. Purpose of Using AI
 
-## Profiling Method
+ChatGPT was used as an AI-assisted learning and coding support tool
+during the development of the SLE-2 experiment.
 
-The Python `time` module is used to measure execution time.
+The purpose was to understand the algorithms, improve the code
+structure, and prepare the experiment documentation.
 
-Each algorithm is executed 3 times.
+---
 
-The following metrics are collected:
+## 3. What AI Helped With
 
-- Execution time in milliseconds
-- Number of nodes expanded
-- Average execution time
+AI assistance was used for:
 
-## Experimental Results
+1. Understanding the working of BFS and DFS.
+2. Understanding the difference between BFS and DFS.
+3. Structuring the Python implementation.
+4. Adding execution-time measurement using `time.perf_counter()`.
+5. Adding a node counter to count expanded nodes.
+6. Running the algorithms multiple times.
+7. Calculating average execution time.
+8. Creating the comparison table.
+9. Preparing the README file.
+10. Preparing the SLE-2 documentation.
 
-| Run | BFS Time (ms) | BFS Nodes | DFS Time (ms) | DFS Nodes |
-|-----|---------------|-----------|---------------|-----------|
-| 1 | 0.038200 | 12 | 0.019500 | 12 |
-| 2 | 0.011200 | 12 | 0.010300 | 12 |
-| 3 | 0.008600 | 12 | 0.008900 | 12 |
-| Average | 0.019333 | 12 | 0.012900 | 12 |
+---
 
-## Observation
+## 4. What I Did Myself
 
-In this experiment, DFS has a lower average execution time than BFS.
-Both algorithms expanded 12 nodes.
+I personally:
 
-The measured result is based on this particular graph and the
-execution environment used during the experiment.
+1. Created and organized the project files.
+2. Ran the Python program in Visual Studio Code.
+3. Tested BFS and DFS on the selected graph.
+4. Ran both algorithms multiple times.
+5. Collected the actual execution-time results.
+6. Checked the paths produced by the algorithms.
+7. Recorded the number of nodes expanded.
+8. Compared the experimental results.
+9. Prepared the final SLE-2 report.
+10. Uploaded the project files to GitHub.
 
-## Conclusion
+---
 
-This experiment helped in understanding the practical performance
-of BFS and DFS. Both algorithms were tested on the same graph and
-their execution time and nodes expanded were recorded. The experiment
-also showed how profiling can be used to compare search algorithms
-using actual measurements rather than only theoretical analysis.
+## 5. AI-Assisted Development
 
-## Tools and Technologies
+AI was used for guidance, explanation, code structure, debugging
+support, and documentation.
 
-- Python
-- Visual Studio Code
-- GitHub
-- Python time module
+The final program was executed and tested by me.
 
-## Files
+The performance values reported in the SLE-2 report are based on my
+own experimental runs.
 
-- `SLE2_BFS_vs_DFS.py` – Python implementation of BFS and DFS
-- `README.md` – Project documentation
-- `AI_CONTRIBUTION_LOG.md` – AI contribution and work record
+---
 
-## Author
+## 6. My Learning Outcome
 
-Student – B.Tech. CSE (AI & ML)
+Through this experiment, I learned how to perform empirical profiling
+of search algorithms.
+
+I learned how to:
+
+- Measure execution time.
+- Run an algorithm multiple times.
+- Calculate average execution time.
+- Count expanded nodes.
+- Compare BFS and DFS using actual data.
+- Understand the practical difference between theoretical analysis
+  and experimental performance.
+
+---
+
+## 7. Declaration
+
+I used AI as a learning and development support tool. I reviewed,
+tested, and executed the final code myself and used my own measured
+results for the SLE-2 analysis.

@@ -1,35 +1,17 @@
-from collections import deque
 import time
-
-# Graph
-graph = {
-    'A': ['B', 'C'],
-    'B': ['D', 'E'],
-    'C': ['F', 'G'],
-    'D': ['H'],
-    'E': ['I', 'J'],
-    'F': ['K'],
-    'G': ['L'],
-    'H': [],
-    'I': [],
-    'J': [],
-    'K': [],
-    'L': []
-}
-
-start = 'A'
-goal = 'L'
+from collections import deque
 
 
-# ---------------- BFS ----------------
+# -----------------------------
+# BFS Algorithm
+# -----------------------------
 def bfs(graph, start, goal):
-    queue = deque([[start]])
+    queue = deque([(start, [start])])
     visited = set()
     nodes_expanded = 0
 
     while queue:
-        path = queue.popleft()
-        node = path[-1]
+        node, path = queue.popleft()
 
         if node in visited:
             continue
@@ -42,20 +24,21 @@ def bfs(graph, start, goal):
 
         for neighbour in graph[node]:
             if neighbour not in visited:
-                queue.append(path + [neighbour])
+                queue.append((neighbour, path + [neighbour]))
 
     return None, nodes_expanded
 
 
-# ---------------- DFS ----------------
+# -----------------------------
+# DFS Algorithm
+# -----------------------------
 def dfs(graph, start, goal):
-    stack = [[start]]
+    stack = [(start, [start])]
     visited = set()
     nodes_expanded = 0
 
     while stack:
-        path = stack.pop()
-        node = path[-1]
+        node, path = stack.pop()
 
         if node in visited:
             continue
@@ -68,93 +51,204 @@ def dfs(graph, start, goal):
 
         for neighbour in reversed(graph[node]):
             if neighbour not in visited:
-                stack.append(path + [neighbour])
+                stack.append((neighbour, path + [neighbour]))
 
     return None, nodes_expanded
 
 
-# ---------------- Run 3 Times ----------------
+# -----------------------------
+# Performance Measurement
+# -----------------------------
+def measure_algorithm(algorithm, graph, start, goal, runs=3):
 
-bfs_times = []
-dfs_times = []
+    times = []
+    nodes = []
 
-bfs_nodes = []
-dfs_nodes = []
+    for i in range(runs):
 
-for i in range(3):
+        start_time = time.perf_counter()
 
-    # BFS
-    start_time = time.perf_counter()
-    bfs_path, nodes = bfs(graph, start, goal)
-    end_time = time.perf_counter()
+        path, expanded = algorithm(graph, start, goal)
 
-    bfs_time = (end_time - start_time) * 1000
+        end_time = time.perf_counter()
 
-    bfs_times.append(bfs_time)
-    bfs_nodes.append(nodes)
+        elapsed = (end_time - start_time) * 1000
 
-    # DFS
-    start_time = time.perf_counter()
-    dfs_path, nodes = dfs(graph, start, goal)
-    end_time = time.perf_counter()
+        times.append(elapsed)
+        nodes.append(expanded)
 
-    dfs_time = (end_time - start_time) * 1000
+    best_time = min(times)
+    average_time = sum(times) / len(times)
+    worst_time = max(times)
 
-    dfs_times.append(dfs_time)
-    dfs_nodes.append(nodes)
+    average_nodes = sum(nodes) / len(nodes)
 
-
-# ---------------- Average ----------------
-
-avg_bfs_time = sum(bfs_times) / 3
-avg_dfs_time = sum(dfs_times) / 3
-
-avg_bfs_nodes = sum(bfs_nodes) / 3
-avg_dfs_nodes = sum(dfs_nodes) / 3
+    return (
+        path,
+        times,
+        best_time,
+        average_time,
+        worst_time,
+        average_nodes
+    )
 
 
-# ---------------- Output ----------------
-
-print("========== BFS vs DFS ==========")
-
-print("\nBFS Path:")
-print(" -> ".join(bfs_path))
-
-print("\nDFS Path:")
-print(" -> ".join(dfs_path))
-
-
-print("\n========== RUN RESULTS ==========")
-
-for i in range(3):
-    print("\nRun", i + 1)
-
-    print("BFS Time: {:.6f} ms".format(bfs_times[i]))
-    print("BFS Nodes Expanded:", bfs_nodes[i])
-
-    print("DFS Time: {:.6f} ms".format(dfs_times[i]))
-    print("DFS Nodes Expanded:", dfs_nodes[i])
-
-
-print("\n========== AVERAGE RESULTS ==========")
-
-print("BFS Average Time: {:.6f} ms".format(avg_bfs_time))
-print("DFS Average Time: {:.6f} ms".format(avg_dfs_time))
-
-print("BFS Average Nodes:", avg_bfs_nodes)
-print("DFS Average Nodes:", avg_dfs_nodes)
+# -----------------------------
+# Graph
+# -----------------------------
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F', 'G'],
+    'D': ['H', 'I'],
+    'E': ['J', 'K'],
+    'F': ['L', 'M'],
+    'G': ['N', 'O'],
+    'H': ['P'],
+    'I': ['Q'],
+    'J': ['R'],
+    'K': ['S'],
+    'L': ['T'],
+    'M': ['U'],
+    'N': ['V'],
+    'O': ['W'],
+    'P': [],
+    'Q': [],
+    'R': [],
+    'S': [],
+    'T': [],
+    'U': [],
+    'V': [],
+    'W': []
+}
 
 
-print("\n========== COMPARISON ==========")
+# -----------------------------
+# Main Program
+# -----------------------------
+def main():
 
-if avg_bfs_time < avg_dfs_time:
-    print("BFS has lower average execution time.")
-else:
-    print("DFS has lower average execution time.")
+    start = 'A'
+    goal = 'W'
+    runs = 3
 
-if avg_bfs_nodes < avg_dfs_nodes:
-    print("BFS expanded fewer nodes.")
-elif avg_dfs_nodes < avg_bfs_nodes:
-    print("DFS expanded fewer nodes.")
-else:
-    print("Both expanded the same number of nodes.")
+    print("=" * 65)
+    print("        SLE-2: BFS vs DFS PERFORMANCE ANALYSIS")
+    print("=" * 65)
+
+    print("\nStart Node      :", start)
+    print("Goal Node       :", goal)
+    print("Number of Runs  :", runs)
+
+    # -------------------------
+    # BFS Measurement
+    # -------------------------
+    (
+        bfs_path,
+        bfs_times,
+        bfs_best,
+        bfs_average,
+        bfs_worst,
+        bfs_nodes
+    ) = measure_algorithm(
+        bfs, graph, start, goal, runs
+    )
+
+    # -------------------------
+    # DFS Measurement
+    # -------------------------
+    (
+        dfs_path,
+        dfs_times,
+        dfs_best,
+        dfs_average,
+        dfs_worst,
+        dfs_nodes
+    ) = measure_algorithm(
+        dfs, graph, start, goal, runs
+    )
+
+    # -------------------------
+    # BFS Results
+    # -------------------------
+    print("\n" + "-" * 65)
+    print("                         BFS RESULTS")
+    print("-" * 65)
+
+    print("Path:", " -> ".join(bfs_path))
+
+    print("\nExecution Times:")
+    print("Run 1 Time       : {:.6f} ms".format(bfs_times[0]))
+    print("Run 2 Time       : {:.6f} ms".format(bfs_times[1]))
+    print("Run 3 Time       : {:.6f} ms".format(bfs_times[2]))
+
+    print("\nBest Time        : {:.6f} ms".format(bfs_best))
+    print("Average Time     : {:.6f} ms".format(bfs_average))
+    print("Worst Time       : {:.6f} ms".format(bfs_worst))
+    print("Nodes Expanded   : {:.2f}".format(bfs_nodes))
+
+    # -------------------------
+    # DFS Results
+    # -------------------------
+    print("\n" + "-" * 65)
+    print("                         DFS RESULTS")
+    print("-" * 65)
+
+    print("Path:", " -> ".join(dfs_path))
+
+    print("\nExecution Times:")
+    print("Run 1 Time       : {:.6f} ms".format(dfs_times[0]))
+    print("Run 2 Time       : {:.6f} ms".format(dfs_times[1]))
+    print("Run 3 Time       : {:.6f} ms".format(dfs_times[2]))
+
+    print("\nBest Time        : {:.6f} ms".format(dfs_best))
+    print("Average Time     : {:.6f} ms".format(dfs_average))
+    print("Worst Time       : {:.6f} ms".format(dfs_worst))
+    print("Nodes Expanded   : {:.2f}".format(dfs_nodes))
+
+    # -----------------------------
+    # Comparison Table
+    # -----------------------------
+    print("\n" + "=" * 65)
+    print("                    COMPARISON TABLE")
+    print("=" * 65)
+
+    print("{:<25} {:<18} {:<18}".format(
+        "Metric", "BFS", "DFS"
+    ))
+
+    print("-" * 65)
+
+    print("{:<25} {:<18.6f} {:<18.6f}".format(
+        "Best Time (ms)",
+        bfs_best,
+        dfs_best
+    ))
+
+    print("{:<25} {:<18.6f} {:<18.6f}".format(
+        "Average Time (ms)",
+        bfs_average,
+        dfs_average
+    ))
+
+    print("{:<25} {:<18.6f} {:<18.6f}".format(
+        "Worst Time (ms)",
+        bfs_worst,
+        dfs_worst
+    ))
+
+    print("{:<25} {:<18.2f} {:<18.2f}".format(
+        "Nodes Expanded",
+        bfs_nodes,
+        dfs_nodes
+    ))
+
+    print("=" * 65)
+
+
+# -----------------------------
+# Program Start
+# -----------------------------
+if __name__ == "__main__":
+    main()
+    
